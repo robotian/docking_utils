@@ -44,74 +44,71 @@ ament_target_dependencies(tf2_pose_node rclcpp)
 
 # 3. Install
 install(TARGETS
-  tf2_pose_node_component
-  tf2_pose_node
-  EXPORT export_${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin/${PROJECT_NAME}
+tf2_pose_node_component
+tf2_pose_node
+EXPORT export_${PROJECT_NAME}
+ARCHIVE DESTINATION lib
+LIBRARY DESTINATION lib
+RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
 
-
-
-
-
-add_executable(tag_to_dock_bridge src/tag_to_dock_bridge.cpp)
-
-target_include_directories(tag_to_dock_bridge PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-
-target_compile_features(tag_to_dock_bridge PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-
-ament_target_dependencies(
-  tag_to_dock_bridge
-  "rclcpp"
-  "geometry_msgs"
-  "std_msgs"
-  "tf2_ros"
-  "tf2_geometry_msgs"
-  "rclcpp_lifecycle"
-)
-
-add_library(tag_bridge_component SHARED src/lifecycle_tag_bridge_component.cpp)
-
-target_include_directories(tag_bridge_component PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-  
-ament_target_dependencies(tag_bridge_component
-  rclcpp
-  rclcpp_lifecycle
-  rclcpp_components
-  geometry_msgs
-  tf2_ros
-  tf2_geometry_msgs
-)
-
-install(TARGETS tag_to_dock_bridge
-  DESTINATION lib/${PROJECT_NAME})
-
-
-  
 install(DIRECTORY config launch 
   DESTINATION share/${PROJECT_NAME}
 )
 
+# add_executable(tag_to_dock_bridge src/tag_to_dock_bridge.cpp)
+
+# target_include_directories(tag_to_dock_bridge PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+
+# target_compile_features(tag_to_dock_bridge PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+
+# ament_target_dependencies(
+#   tag_to_dock_bridge
+#   "rclcpp"
+#   "geometry_msgs"
+#   "std_msgs"
+#   "tf2_ros"
+#   "tf2_geometry_msgs"
+#   "rclcpp_lifecycle"
+# )
+
+# add_library(tag_bridge_component SHARED src/lifecycle_tag_bridge_component.cpp)
+
+# target_include_directories(tag_bridge_component PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
+  
+# ament_target_dependencies(tag_bridge_component
+#   rclcpp
+#   rclcpp_lifecycle
+#   rclcpp_components
+#   geometry_msgs
+#   tf2_ros
+#   tf2_geometry_msgs
+# )
+
+# install(TARGETS tag_to_dock_bridge
+#   DESTINATION lib/${PROJECT_NAME})
+
+
+  
+
 # rclcpp_components_register_nodes(tag_bridge_component "docking_utils::LifecycleTagBridge")
 
-rclcpp_components_register_node(tag_bridge_component
-    PLUGIN "LifecycleTagBridge"
-    EXECUTABLE "docking_utils"
-)
+# rclcpp_components_register_node(tag_bridge_component
+#     PLUGIN "LifecycleTagBridge"
+#     EXECUTABLE "docking_utils"
+# )
 
-target_compile_definitions(tag_bridge_component PRIVATE "COMPOSITION_BUILDING_DLL")
+# target_compile_definitions(tag_bridge_component PRIVATE "COMPOSITION_BUILDING_DLL")
 
-install(TARGETS tag_bridge_component
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+# install(TARGETS tag_bridge_component
+#   ARCHIVE DESTINATION lib
+#   LIBRARY DESTINATION lib
+#   RUNTIME DESTINATION bin)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
