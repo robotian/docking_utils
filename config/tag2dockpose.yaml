@@ -1,0 +1,6 @@
+/*/tag_to_dock_bridge:
+    ros__parameters:
+        output_frame: odom
+        arget_tag_frame: jackal_charger_april
+        tag_to_dockpose_transform: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0] 
+        # [x, y, z, x, y, z, w] (translation in meter and rotation in quaternion) from the tag frame to the dock pose frame
